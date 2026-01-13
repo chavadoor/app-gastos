@@ -43,7 +43,7 @@ except Exception as e:
 st.info("👆 Tip: Para usar la cámara completa de tu celular, usa la pestaña '📱 Celular'.")
 
 # Renombramos las pestañas para que sea más claro
-tab1, tab2 = st.tabs(["📱 Celular (Cámara Nativa)", "💻 Webcam (PC)"])
+tab1 = st.tabs(["📱 Celular (Cámara Nativa)"])
 img_file_buffer = None
 
 with tab1:
