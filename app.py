@@ -40,8 +40,8 @@ except Exception as e:
     st.stop()
 
 # --- 2. INTERFAZ SIMPLIFICADA ---
-st.write("📸 **En Celular:** Toca abajo y elige 'Tomar Foto'.")
-st.write("💻 **En PC:** Toca abajo y sube tu archivo.")
+st.write("📸 **En Celular:** Elige 'Tomar Foto'.")
+st.write("💻 **En PC:**  Sube tu archivo.")
 
 img_file_buffer = st.file_uploader("Subir Ticket", type=["jpg", "png", "jpeg"], label_visibility="collapsed")
 
