@@ -61,7 +61,7 @@ if img_file_buffer:
                     "comercio": "Nombre del negocio",
                     "total": 0.00,
                     "moneda": "MXN",
-                    "categoria": "Alimentos/Transporte/Salud/Otros"
+                    "categoria": "Alimentos/Transporte/Salud/Entretenimiento/Otros"
                 }
                 """
                 response = model.generate_content([prompt, image])
