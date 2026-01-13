@@ -8,7 +8,7 @@ from datetime import datetime
 
 # --- CONFIGURACIÓN DE LA PÁGINA ---
 st.set_page_config(page_title="Mis Gastos", page_icon="🧾")
-st.title("🧾 Escáner de Gastos")
+st.title("Escáner de Gastos")
 
 # --- 1. CONEXIÓN (ID FIJO) ---
 SPREADSHEET_ID = "1_xAPWCdhLmUoEh9kZwcV60ldzZhvTmkSWOMEaTo0jjA"
