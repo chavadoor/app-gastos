@@ -40,8 +40,7 @@ except Exception as e:
     st.stop()
 
 # --- 2. INTERFAZ SIMPLIFICADA ---
-st.write("📸 **Foto:** Elige 'Tomar Foto'.")
-st.write("💻 **Archivo:**  Sube tu archivo.")
+
 
 img_file_buffer = st.file_uploader("Subir Ticket", type=["jpg", "png", "jpeg"], label_visibility="collapsed")
 
