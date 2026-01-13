@@ -39,25 +39,19 @@ except Exception as e:
     st.write(e)
     st.stop()
 
-# --- 2. INTERFAZ OPTIMIZADA PARA CELULAR ---
-st.info("👆 Tip: Para usar la cámara completa de tu celular, usa la pestaña '📱 Celular'.")
+# --- 2. INTERFAZ SIMPLIFICADA ---
+st.write("📸 **En Celular:** Toca abajo y elige 'Tomar Foto'.")
+st.write("💻 **En PC:** Toca abajo y sube tu archivo.")
 
-# Renombramos las pestañas para que sea más claro
-tab1 = st.tabs(["📱 Celular (Cámara Nativa)"])
-img_file_buffer = None
-
-with tab1:
-    # Esta opción dispara la cámara nativa en Android/iOS
-    upl = st.file_uploader("Toca aquí y elige 'Tomar Foto' o 'Fototeca'", type=["jpg", "png", "jpeg"])
-    if upl: img_file_buffer = upl
+img_file_buffer = st.file_uploader("Subir Ticket", type=["jpg", "png", "jpeg"], label_visibility="collapsed")
 
 # --- 3. PROCESAMIENTO ---
 if img_file_buffer:
     image = Image.open(img_file_buffer)
-    # Mostramos la imagen un poco más grande
-    st.image(image, caption="Vista previa del Ticket", use_container_width=True)
+    # Mostramos la imagen ocupando el ancho disponible
+    st.image(image, caption="Vista previa", use_container_width=True)
     
-    if st.button("Procesar Ticket", type="primary"):
+    if st.button("Procesar Ticket", type="primary", use_container_width=True):
         with st.spinner("Leyendo datos..."):
             try:
                 model = genai.GenerativeModel('gemini-2.5-flash')
