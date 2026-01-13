@@ -4,6 +4,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import json
 from PIL import Image
+from datetime import datetime
 
 # --- CONFIGURACIÓN DE LA PÁGINA ---
 st.set_page_config(page_title="Mis Gastos", page_icon="🧾")
@@ -73,11 +74,16 @@ if img_file_buffer:
                 text = response.text.replace("```json", "").replace("```", "").strip()
                 data = json.loads(text)
                 
-                # --- MAPEO DE COLUMNAS (AQUÍ ESTABA EL ERROR) ---
-                # Ajusta este orden según tus columnas en Excel (A, B, C, D, E)
+                # --- REGLA DE NEGOCIO: FECHA POR DEFECTO ---
+                fecha_ticket = data.get("fecha")
                 
+                # Si la fecha viene vacía, nula o 'None', usamos la de HOY
+                if not fecha_ticket or fecha_ticket == "null":
+                    fecha_ticket = datetime.now().strftime("%Y-%m-%d")
+                
+                # --- MAPEO DE COLUMNAS ---
                 row = [
-                    data.get("fecha"),        # Columna A: Fecha del Ticket
+                    fecha_ticket,             # Columna A: Fecha (Ticket o Hoy)
                     data.get("comercio"),     # Columna B: Comercio
                     data.get("categoria"),    # Columna C: Categoría
                     data.get("total"),        # Columna D: Total
@@ -86,12 +92,7 @@ if img_file_buffer:
                 
                 sheet.append_row(row)
                 st.balloons()
-                st.success("✅ Guardado correctamente")
-                
-                # Mostrar lo que se guardó
-                st.write(f"**Fecha:** {data.get('fecha')}")
-                st.write(f"**Comercio:** {data.get('comercio')}")
-                st.write(f"**Total:** ${data.get('total')}")
+                st.success(f"✅ Guardado con fecha: {fecha_ticket}")
                 
             except Exception as e:
                 st.error("Error al leer el ticket.")
