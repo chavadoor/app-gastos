@@ -51,11 +51,6 @@ with tab1:
     upl = st.file_uploader("Toca aquí y elige 'Tomar Foto' o 'Fototeca'", type=["jpg", "png", "jpeg"])
     if upl: img_file_buffer = upl
 
-with tab2:
-    # Esta opción es mejor para cuando estás en la Laptop
-    cam = st.camera_input("Usar Webcam del navegador")
-    if cam: img_file_buffer = cam
-
 # --- 3. PROCESAMIENTO ---
 if img_file_buffer:
     image = Image.open(img_file_buffer)
