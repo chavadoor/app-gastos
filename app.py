@@ -39,22 +39,28 @@ except Exception as e:
     st.write(e)
     st.stop()
 
-# --- 2. INTERFAZ ---
-tab1, tab2 = st.tabs(["📸 Cámara", "📂 Subir Archivo"])
+# --- 2. INTERFAZ OPTIMIZADA PARA CELULAR ---
+st.info("👆 Tip: Para usar la cámara completa de tu celular, usa la pestaña '📱 Celular'.")
+
+# Renombramos las pestañas para que sea más claro
+tab1, tab2 = st.tabs(["📱 Celular (Cámara Nativa)", "💻 Webcam (PC)"])
 img_file_buffer = None
 
 with tab1:
-    cam = st.camera_input("Tomar foto")
-    if cam: img_file_buffer = cam
+    # Esta opción dispara la cámara nativa en Android/iOS
+    upl = st.file_uploader("Toca aquí y elige 'Tomar Foto' o 'Fototeca'", type=["jpg", "png", "jpeg"])
+    if upl: img_file_buffer = upl
 
 with tab2:
-    upl = st.file_uploader("Subir imagen", type=["jpg", "png", "jpeg"])
-    if upl: img_file_buffer = upl
+    # Esta opción es mejor para cuando estás en la Laptop
+    cam = st.camera_input("Usar Webcam del navegador")
+    if cam: img_file_buffer = cam
 
 # --- 3. PROCESAMIENTO ---
 if img_file_buffer:
     image = Image.open(img_file_buffer)
-    st.image(image, width=200)
+    # Mostramos la imagen un poco más grande
+    st.image(image, caption="Vista previa del Ticket", use_container_width=True)
     
     if st.button("Procesar Ticket", type="primary"):
         with st.spinner("Leyendo datos..."):
@@ -83,7 +89,7 @@ if img_file_buffer:
                 
                 # --- MAPEO DE COLUMNAS ---
                 row = [
-                    fecha_ticket,             # Columna A: Fecha (Ticket o Hoy)
+                    fecha_ticket,             # Columna A: Fecha
                     data.get("comercio"),     # Columna B: Comercio
                     data.get("categoria"),    # Columna C: Categoría
                     data.get("total"),        # Columna D: Total
@@ -92,7 +98,7 @@ if img_file_buffer:
                 
                 sheet.append_row(row)
                 st.balloons()
-                st.success(f"✅ Guardado con fecha: {fecha_ticket}")
+                st.success(f"✅ Guardado: {data.get('comercio')} - ${data.get('total')}")
                 
             except Exception as e:
                 st.error("Error al leer el ticket.")
